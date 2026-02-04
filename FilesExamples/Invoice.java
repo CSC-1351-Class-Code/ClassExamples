@@ -43,5 +43,6 @@ public class Invoice {
 		System.out.printf("------------------------------------\n");
 		System.out.printf("%30s%.2f\n", "$", sumTotal);
 
+		input.close();
 	}
 }

@@ -22,5 +22,6 @@ public class Students {
 		}
 
 		outFile.close();
+		inUser.close();
 	}
 }

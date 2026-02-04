@@ -7,11 +7,11 @@ public class StudentRunner {
 	public static void main(String[] args){
 		ArrayList<Student> students = new ArrayList<>();
 
-		students.add(new Student("Dillon", "Zimmerman", 4));
-		students.add(new Student("Megan", "Nameth", 5));
-		students.add(new Student("John", "Doe", 1));
-		students.add(new Student("Tom", "Anderson", 2));
-		students.add(new Student("Jane", "Doe", 3));
+		students.add(new Student("Dillon", "Zimmerman"));
+		students.add(new Student("Megan", "Nameth"));
+		students.add(new Student("John", "Doe"));
+		students.add(new Student("Tom", "Anderson"));
+		students.add(new Student("Jane", "Doe"));
 
 		// Show that the Student objects appear in the unsorted order we added them
 		for(Student student : students){

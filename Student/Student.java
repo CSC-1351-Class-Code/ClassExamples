@@ -10,11 +10,14 @@ public class Student implements Comparable<Student>{
 
 	// Our class variables
 	private static boolean idSort = false;
+	private static int enrollment = 1;
 
-	public Student(String f, String l, int id){
+	public Student(String f, String l){
 		firstName = f;
 		lastName = l;
-		UID = id;
+		// Have UID auto made based on the enrollment count
+		UID = enrollment;
+		enrollment++;
 	}
 
 	// A static setter method
