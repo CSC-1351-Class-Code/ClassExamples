@@ -6,10 +6,10 @@ import java.util.Stack;
 
 public class SortingRunner {
 	public static void main(String[] args){
-		/* int[] test = makearr(20);
+		/* int[] test = makearr(10);
 
 		printarr(test);
-		quickSort(test);
+		quickSortIter(test);
 		printarr(test); */
 
 		timeSorting();
@@ -61,6 +61,12 @@ public class SortingRunner {
 			quickSort(arrCopy);
 			end = System.nanoTime();
 			System.out.printf("\tQuick sort took %d milliseconds%n", (end-start)/1000);
+			arrCopy = arr.clone();
+
+			start = System.nanoTime();
+			quickSortIter(arrCopy);
+			end = System.nanoTime();
+			System.out.printf("\tIterative Quick sort took %d milliseconds%n", (end-start)/1000);
 		}
 	}
 
@@ -314,38 +320,71 @@ public class SortingRunner {
 		return ret;
 	}
 
+	public static int partition(int arr[], int low, int high)
+    {
+        int pivot = arr[high];
+        int i = (low - 1);
+        for (int j = low; j <= high - 1; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+
+    /* The main function that implements QuickSort()
+    arr[] --> Array to be sorted,
+    low --> Starting index,
+    high --> Ending index */
+    static void qSort(int arr[], int low, int high)
+    {
+        if (low < high) {
+            /* pi is partitioning index, arr[pi] is
+            now at right place */
+            int pi = partition(arr, low, high);
+
+            // Recursively sort elements before
+            // partition and after partition
+            qSort(arr, low, pi - 1);
+            qSort(arr, pi + 1, high);
+        }
+    }
 
 	public static void quickSortIter(int[] arr){
-		Stack<int[]> boundStack = new Stack<>();
-		int[] result = new int[arr.length];
+		Stack<int[]> stack = new Stack();
+		int l,h;
 
 
-		int left = 0;
-		int right = arr.length;
+		int[] bounds = {0,arr.length -1};
+        stack.push(bounds);
 
-		Random rng = new Random();
+        while (!stack.isEmpty()) {
+			bounds = stack.pop();
+			l = bounds[0];
+            h = bounds[1];
 
-		do{
-			int partitionIndex = rng.nextInt(arr.length);
-			int partitionValue = arr[partitionIndex];
-			
-			for(int elem : arr){
-				if(arr[left] <= partitionValue){
-					result[left] = elem;
-					left++;
-				}
-				else{
-					result[right] = elem;
-					right--;
-				}
-			}
+            int p = partition(arr, l, h);
 
-			if(left != right){
-				System.out.printf("Alignment error:%n\tLeft: %d%n\tRight: %d%n", left, right);
-				return;
-			}
-			result[left] = partitionValue;
+            if (p - 1 > l) {
+				bounds[0] = l;
+				bounds[1] = p - 1;
+				stack.push(bounds);
+            }
 
-		}while(!boundStack.isEmpty());
+            if (p + 1 < h) {
+				bounds[0] = p + 1;
+				bounds[1] = h;
+				stack.push(bounds);
+            }
+        }
 	}
 }
